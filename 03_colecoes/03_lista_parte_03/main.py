@@ -40,6 +40,8 @@ while True:
             os.system("cls")
             # Deletando o nome que eu quiser
             try:
+                for i in range(len(nomes)):
+                    print(f"{i} - {nomes[i]}")
                 posicao = int(input("Informe a posição a ser deletada: ").strip())
                 print()
                 if posicao >= 0 and posicao < len(nomes):
