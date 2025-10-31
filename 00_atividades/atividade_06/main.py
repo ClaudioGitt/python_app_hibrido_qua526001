@@ -1,3 +1,5 @@
+import time
+import os
 # TODO
 '''
 Crie um programa que receba do usuário os seguintes dados:
@@ -8,6 +10,7 @@ Crie um programa que receba do usuário os seguintes dados:
 - Gênero
 Após isso, o programa deve armazenar esses dados em um dicionário e exibir os dados desse dicionário na tela.
 '''
+os.system("cls")
 informacoes = {}
 while True:
     print("== Opções disponíveis ==\n1- Nome\n2- Email\n3- Telefone\n4- CPF\n5- Gênero\n6- Sair")
@@ -24,6 +27,14 @@ while True:
         case 5:
             informacoes["Gênero: "] = input("Informe o Gênero a ser inserido: ").strip()
         case 6:
+            print("Saindo.")
+            time.sleep(1)
+            os.system("cls")
+            print("Saindo..")
+            time.sleep(1)
+            os.system("cls")
+            print("Saindo...")
+            time.sleep(1)
             break
         case _:
             print("Opção inválida.")
