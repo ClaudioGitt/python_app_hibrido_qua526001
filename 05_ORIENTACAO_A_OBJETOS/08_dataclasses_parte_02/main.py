@@ -7,7 +7,6 @@ def limpar():
     os.system("cls"if os.name == "nt" else "clear")
 
 def main():
-    limpar()
     usuario = PessoaFisica(nome="",idade=0,cpf="",profissao="",email="",telefone="",endereco="")
     empresa = PessoaJuridica(nome_fantasia="",cnpj="",website="",email="",telefone="",endereco="")
 
@@ -50,9 +49,9 @@ def main():
             case "4":
                 tempo()
                 if not empresa:
-                    print("Dados inexistentes!")
+                    print("Dados inexistentes")
                 else:
-                    print(empresa)
+                    print("Aff")
                 continue
             case "5":
                 tempo()
