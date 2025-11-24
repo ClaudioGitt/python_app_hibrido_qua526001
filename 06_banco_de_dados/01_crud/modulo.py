@@ -81,7 +81,7 @@ def atualizar(session, Pessoa):
             case _:
                 return "Opção inválida!"
         # Dar a opção ao usuário qual campo deseja alterar.
-        if pessoa:
+        if pessoa: # O if pessoa: é o mesmo que if pessoa is True, ou seja, ver se é verdadeiro que tem uma informação e não é None
             limpar()
             while True:
                 print(f"ID {pessoa.id_pessoa}")
@@ -95,7 +95,7 @@ def atualizar(session, Pessoa):
                 limpar()
                 match campo:
                     case "1":
-                        nome_nome = input("Informe o nome: ").strip().title()
+                        novo_nome = input("Informe o nome: ").strip().title()
                         pessoas = session.query(Pessoa).filter(Pessoa.nome == novo_nome).all()
                         continue
                     case "2":
@@ -138,3 +138,49 @@ def atualizar(session, Pessoa):
             return "Pessoa não encontrada."
     except Exception as e:
         print(f"Não foi possível alterar os dados. {e}")
+def deletar(session, Pessoa):
+# vou precisar informar um registro que quero excluir
+    limpar()
+    id_pessoa = ""
+    email = ""
+    pessoa = ""
+
+    print("Informe o campo que deseja pesquisar: ")
+    print("1 - ID")
+    print("2 - E-mail")
+    print("3 - Retornar")
+    opcao = input("Informe o campo que deseja pesquisar: ").strip()
+    match opcao:
+        case "1":
+            id_pessoa = input("Informe o ID a ser excluído: ").strip()
+            pessoa = session.query(Pessoa).filter_by(id_pessoa = id_pessoa).first()
+            # nesse caso, nao precisa de retornar a função
+        case "2":
+            email = input("Informe o e-mail do cadastro a ser excluído: ").strip().lower()
+            pessoa = session.query(Pessoa).filter_by(email = email).first()
+        case "3":
+            return "" # sem o loop, o return aqui serve.
+        case _:
+            return "Opção inválida."
+        # Após a pesquisa nos query, vamos para poder deletar.
+    if pessoa:
+        # mesmo com if pessoa, é interessante exibir os dados para o usuário saber o que tá excluíndo.
+        limpar()
+        print(f"ID: {pessoa.id_pessoa}")
+        print(f"Nome: {pessoa.nome}")
+        print(f"E-mail: {pessoa.email}")
+        print(f"Gênero: {pessoa.genero}")
+        print(f"Data de Nascimento: {pessoa.nascimento.strftime("%d/%m/%Y")}\n") # sempre lembrar de como tratar a data.
+        print({'-'*40})
+        print("1 - Sim")
+        print("2 - Não")
+        excluir = input("Tem certeza que deseja excluir o registro? ")
+        match excluir:
+            case "1":
+                session.delete(pessoa)
+                session.commit()
+                return f"Pessoa excluída com sucesso!"
+            case "2":
+                pass # usando o pass, funciona da mesma forma, mas return consome menos memória
+            case _:
+                return "Opção inválida!"
