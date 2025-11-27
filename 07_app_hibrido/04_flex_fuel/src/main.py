@@ -28,6 +28,10 @@ def main(page: ft.Page):
       page.title = "APP Flex Fuel"
       page.scroll = "adaptive"
       page.theme_mode = ft.ThemeMode.LIGHT
+      page.window.min_width=600
+      page.window.max_width=700
+      page.window.min_height=500
+      page.window.max_height=500
 
       gasolina = ft.TextField(label="Valor da gasolina",prefix_text="R$ ",keyboard_type=ft.KeyboardType.NUMBER,hover_color="#add8e6",bgcolor="white")
 
