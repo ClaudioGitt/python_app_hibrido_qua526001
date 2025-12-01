@@ -48,7 +48,7 @@ def main(page: ft.Page):
       page.add(
             ft.SafeArea(
                   ft.Container(
-                        ft.Text("FLEX FUEL", size=25, weight="bold",color=""),
+                        ft.Text("FLEX FUEL", size=25, weight="bold",color="WHITE"),
                         alignment=ft.alignment.center,
                         padding=100
                   ),
