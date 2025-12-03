@@ -7,8 +7,7 @@ import threading
 def main(page: ft.Page):
     page.title = 'Youtube Downloader'
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.window.icon = 'assets/youtube.png'
-    page.window.resizable = False
+    page.window.icon = "assets/youtube.png"
     
     # cria as pastas caso não existam
     caminho_videos = 'videos'
@@ -18,7 +17,7 @@ def main(page: ft.Page):
     os.makedirs(caminho_audios, exist_ok = True)
 
     # Componentes da interface gráfica
-    titulo = ft.Text("Use uma URL", color=ft.Colors.BLACK12,
+    titulo = ft.Text("Use uma URL", color=ft.Colors.BLACK,
                      size=20, weight=ft.FontWeight.BOLD)
     url = ft.TextField(
         label='Cole a URL do vídeo do Youtube aqui',
@@ -26,7 +25,7 @@ def main(page: ft.Page):
         border_radius=10
     )
     base_path = os.path.dirname(__file__)
-    logo_path = os.path.join(base_path, "assets", "logo.png")
+    logo_path = os.path.join(base_path, "assets", "youtube.png")
     logo_cabecalho = ft.Image(src=logo_path, width=300, height=200)
 
     # componente para mostrar informações do vídeo
@@ -148,7 +147,7 @@ def main(page: ft.Page):
                 mostrar_info_videos(yt)
 
                 # iniciar o download do áudio
-                status_text = f"Extraindo o audio de {yt._title}..."
+                status_text.value = f"Extraindo o audio de {yt._title}..."
                 page.update()
 
                 stream = yt.streams.filter(only_audio=True).first()
@@ -192,11 +191,9 @@ def main(page: ft.Page):
         style=ft.ButtonStyle(
             bgcolor=ft.Colors.BLUE,
             color=ft.Colors.WHITE,
-            shadow_color=ft.Colors.BLACK,
             elevation=3,
-            text_style=ft.TextStyle(size=18),
-            visual_density=2,
-            shape=ft.RoundedRectangleBorder
+            text_style=ft.TextStyle(size=18)
+            
         )
     )
     audio_btn = ft.ElevatedButton(
@@ -206,15 +203,13 @@ def main(page: ft.Page):
         style = ft.ButtonStyle(
             bgcolor = ft.Colors.BLUE,
             color = ft.Colors.WHITE,
-            shadow_color = ft.Colors.BLACK,
             elevation = 3,
-            text_style = ft.TextStyle(size=18),
-            visual_density = 2,
-            shape = ft.RoundedRectangleBorder
+            text_style = ft.TextStyle(size=18)
         )
     )
     clear_btn = ft.IconButton(
         on_click=limpar_campos,
+        icon=ft.Icons.CAR_CRASH,
         style=ft.ButtonStyle(
             bgcolor=ft.Colors.GREY,
             color=ft.Colors.WHITE,
@@ -226,7 +221,7 @@ def main(page: ft.Page):
         [url, clear_btn],
         spacing=10,
         alignment=ft.MainAxisAlignment.CENTER,
-        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        vertical_alignment=ft.CrossAxisAlignment.CENTER
     )
     botoes = ft.Row(
         [video_btn,audio_btn],
@@ -235,13 +230,23 @@ def main(page: ft.Page):
         vertical_alignment=ft.CrossAxisAlignment.CENTER
     )
     page.add(
-        ft.SafeArea(
-            ft.Container(
-                alignment=ft.alignment.center,
-            ),
-            expand=True,
+        ft.Column(
+            # Esse não precisa do safe Area
+            [
+                logo_cabecalho,
+                titulo,
+                linha_url,
+                ft.Divider(height=0,color=ft.Colors.TRANSPARENT),
+                video_info,
+                botoes,
+                ft.Divider(height=10, color=ft.Colors.TRANSPARENT),
+                progress_bar, status_text
+            ],
+            spacing=15,
+            alignment=ft.CrossAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            scroll=ft.ScrollMode.AUTO # mudar para AUTO
         )
     )
-
 
 ft.app(main)

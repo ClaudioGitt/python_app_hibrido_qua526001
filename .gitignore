@@ -1,3 +1,5 @@
 # Aprendendo a excluir os arquivos
 */*/__pycache__
 */.venv
+07_app_hibrido/audios/*
+07_app_hibrido/videos/*
