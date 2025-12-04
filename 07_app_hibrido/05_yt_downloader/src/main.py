@@ -17,7 +17,7 @@ def main(page: ft.Page):
     os.makedirs(caminho_audios, exist_ok = True)
 
     # Componentes da interface gráfica
-    titulo = ft.Text("Use uma URL", color=ft.Colors.BLACK,
+    titulo = ft.Text("Use uma URL", color=ft.Colors.ON_SURFACE,
                      size=20, weight=ft.FontWeight.BOLD)
     url = ft.TextField(
         label='Cole a URL do vídeo do Youtube aqui',

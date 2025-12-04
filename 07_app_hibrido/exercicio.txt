@@ -1,0 +1,14 @@
+Desenvolver um app de lista de tarefas
+Adiciona uma tarefa e o programa adiciona uma lista de tarefa
+Como obter mais conhecimento:
+    1 - Sempre usar a documentação.
+    https://flet.dev/docs/
+Sobre o exercicio:
+    1 - Tem o campo, o usuário clica em adicionar uma tarefa e ele realmente adiciona.
+Onde o flet armazena o banco?
+    Na pasta storage
+        - Acho que dentro da pasta Data
+Desenvolver o TO-DO APP
+    - É um app de taregas, adicionar tarefas
+Comando para rodar:
+    flet run 06_to_do_app
