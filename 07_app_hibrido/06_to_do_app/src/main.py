@@ -1,11 +1,15 @@
 import flet as ft
 
 class Task(ft.Column):
-    def __init__(self, task_name, task_delete):
+    def __init__(self, task_name, task_status_change, task_delete):
         super().__init__()
+        self.completed = False
         self.task_name = task_name
+        self.task_status_change = task_status_change
         self.task_delete = task_delete
-        self.display_task = ft.Checkbox(value=False, label=self.task_name)
+        self.display_task = ft.Checkbox(
+            value=False, label=self.task_name, on_change=self.status_changed
+        )
         self.edit_name = ft.TextField(expand=1)
 
         self.display_view = ft.Row(
@@ -52,17 +56,14 @@ class Task(ft.Column):
         self.edit_view.visible = True
         self.update()
 
-    def save_clicked(self,e):
-        self.display_task = self.edit_name.value
-        self.display_view.visible = True
-        self.edit_view.visible = True
-        self.update()
-
     def save_clicked(self, e):
         self.display_task.label = self.edit_name.value
         self.display_view.visible = True
         self.edit_view.visible = False
         self.update()
+    def status_changed(self, e):
+        self.completed = self.display_task.value
+        self.task_status_change()
 
     def delete_clicked(self, e):
         self.task_delete(self)
@@ -73,26 +74,53 @@ class TodoApp(ft.Column):
         super().__init__()
         self.new_task = ft.TextField(hint_text="O que precisa ser feito?", expand=True)
         self.tasks = ft.Column()
-        self.width = 300
+
+        self.filter = ft.Tabs(
+            selected_index=0,
+            on_change=self.tabs_changed,
+            tabs=[ft.Tab(text="Todos"), ft.Tab(text="Ativo"), ft.Tab(text="Completo")],
+        )
+        self.width = 600
         self.controls = [
             ft.Row(
                 controls=[
                     self.new_task,
                     ft.FloatingActionButton(
-                        icon=ft.Icons.ADD, on_click=self.add_clicked),
+                        icon=ft.Icons.ADD, on_click=self.add_clicked
+                    ),
                 ],
             ),
-            self.tasks,
+            ft.Column(
+                spacing=25,
+                controls=[
+                    self.filter,
+                    self.tasks,
+                ],
+            ),
         ]
-
+        
     def add_clicked(self,e):
-        task = Task(self.new_task.value, self.task_delete)
+        task = Task(self.new_task.value,self.tasks_status_change, self.task_delete)
         self.tasks.controls.append(task)
         self.new_task.value = ""
         self.update()
 
+    def tasks_status_change(self):
+        self.update()
+
     def task_delete(self, task):
         self.tasks.controls.remove(task)
+        self.update()
+
+    def before_update(self):
+        status = self.filter.tabs[self.filter.selected_index].text
+        for task in self.tasks.controls:
+            task.visible = (
+                status == "Todos"
+                or (status == "Ativo" and task.completed == False)
+                or (status == "Completo" and task.completed)
+            )
+    def tabs_changed(self,e):
         self.update()
 
 def main(page: ft.Page):
@@ -100,11 +128,11 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.update()
     todo = TodoApp()
-    titulo = ft.Text("Use uma URL", color=ft.Colors.ON_SURFACE,
+    titulo = ft.Text("TO DO-APP", color=ft.Colors.ON_SURFACE,
                      size=20, weight=ft.FontWeight.BOLD)
-
+    app = TodoApp()
     page.add(
         titulo,
-        todo
+        app
     )
 ft.app(main)

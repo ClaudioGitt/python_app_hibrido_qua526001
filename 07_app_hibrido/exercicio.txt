@@ -3,6 +3,7 @@ Adiciona uma tarefa e o programa adiciona uma lista de tarefa
 Como obter mais conhecimento:
     1 - Sempre usar a documentação.
     https://flet.dev/docs/
+    https://flet.dev/docs/tutorials/python-todo
 Sobre o exercicio:
     1 - Tem o campo, o usuário clica em adicionar uma tarefa e ele realmente adiciona.
 Onde o flet armazena o banco?
