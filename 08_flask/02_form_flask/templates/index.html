@@ -9,14 +9,15 @@
     <h1>Formulário</h1>
     <hr>
     
-    <form action="/enviar" method="post">
-        <label for="Nome:">Nome:</label><br>
-        <input type="text" name="Texto" id="Nome" placeholder="Informe seu nome:"><br><br>
-        <label for="Idade:">Idade:</label><br>
-        <input type="number" idade="Idade"placeholder="Informe sua idade:"><br>
+    <form action="/enviar" method="POST">
+        <label>Nome:</label><br>
+        <input type="text" name="texto" placeholder="Informe seu nome:"><br><br>
+        <label>Idade:</label><br>
+        <!-- nao esquecer do name -->
+        <input type="number" name="idade" placeholder="Informe sua idade:"><br></br>
         <button type="submit">Enviar</button>
     </form>
     <br><br>
-    <h2>{{nome,idade}}</h2>
+    <h2>{{ saida }}</h2><h2>{{ saida2 }}</h2>
 </body>
 </html>
